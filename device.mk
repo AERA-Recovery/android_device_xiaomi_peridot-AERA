@@ -32,5 +32,11 @@ SHIPPING_API_LEVEL := 34
 # Dynamic partitions
 PRODUCT_USE_DYNAMIC_PARTITIONS := true
 
+# Poco F6 Adreno 735 backend. The kernel module, Gen7.11 firmware, EGL/GLES
+# userspace, and Qualcomm allocator/mapper closure are sourced from the matching
+# stock dump and remain device-local so generic AERA keeps its software fallback.
+PRODUCT_VENDOR_PROPERTIES += \
+    ro.hardware.egl=adreno
+
 # Soong namespaces
 PRODUCT_SOONG_NAMESPACES += $(DEVICE_PATH)

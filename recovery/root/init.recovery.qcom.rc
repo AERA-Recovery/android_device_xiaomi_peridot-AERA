@@ -31,6 +31,18 @@ on early-init
     wait /sys/fs/selinux/enforce
     write /sys/fs/selinux/enforce 0
 
+# Qualcomm EGL imports gralloc-native buffers. Keep the stock allocator in an
+# init-managed process so AERA's Adreno renderer can import the KMS buffers.
+service aera-graphics-allocator /vendor/bin/hw/vendor.qti.hardware.display.allocator-service
+    class hal
+    seclabel u:r:recovery:s0
+    user root
+    group root graphics
+    capabilities SYS_NICE
+    # Do not spin every five seconds if a vendor/runtime mismatch prevents
+    # registration. A healthy allocator stays resident after its first start.
+    oneshot
+
 on early-fs
     write /proc/sys/walt/sched_lib_name "recovery,magiskboot,Updater,updater,update_engine_sideload"
     write /proc/sys/walt/sched_lib_mask_force 255

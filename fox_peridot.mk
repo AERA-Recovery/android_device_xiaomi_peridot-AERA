@@ -21,6 +21,7 @@
 # screen settings
 # e.g. if the aspect ratio is 19:9 then use 19*120 (=2280)
 AERA_MAINTAINER := Jonas Salo & Daniel Springer
+AERA_UI2_ADAPTIVE_RESOLUTION := true
 AERA_SCREEN_H := 2400
 AERA_STATUS_H := 115
 OF_HIDE_NOTCH := 1

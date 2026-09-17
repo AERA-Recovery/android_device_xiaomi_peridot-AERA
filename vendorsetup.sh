@@ -68,9 +68,10 @@ if [ "$AERA_BUILD_DEVICE" = "$FDEVICE" ]; then
 	export AERA_ENABLE_SUKISU_SUPPORT=1
 
 	# Fox Settings
-	export AERA_VARIANT="crypto"
 	export AERA_SETTINGS_ROOT_DIRECTORY="/persist"
-	export AERA_MAINTAINER_PATCH_VERSION="$(date -d "1 hour" +%Y%m%d%H%M)"
+	# AERA begins at R1.0; do not append legacy variant or patch suffixes.
+	unset AERA_VARIANT
+	unset AERA_MAINTAINER_PATCH_VERSION
 	export AERA_ALLOW_EARLY_SETTINGS_LOAD=1
 	export AERA_RESET_SETTINGS="disabled"
 else

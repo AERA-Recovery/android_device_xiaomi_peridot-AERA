@@ -31,13 +31,13 @@ if [ -z "$slot" ]; then
 else
     LOGMSG "Active boot slot: $slot"
 
-    LOGMSG "Backing up OrangeFox recovery before ROM overwrites..."
+    LOGMSG "Backing up AERA recovery before ROM overwrite..."
     if [ -e /dev/block/bootdevice/by-name/recovery${slot} ]; then
-        if dd if="/dev/block/bootdevice/by-name/recovery${slot}" of="/tmp/fox_backup.img" bs=1M; then
+        if dd if="/dev/block/bootdevice/by-name/recovery${slot}" of="/tmp/aera_backup.img" bs=1M; then
             sync
-            LOGMSG "Backup of OrangeFox recovery was successful"
+            LOGMSG "AERA recovery backup completed"
         else
-            LOGMSG "Failed to backup OrangeFox recovery..."
+            LOGMSG "Failed to back up AERA recovery"
         fi
     else
         LOGMSG "Recovery partition not found; skipping backup..."

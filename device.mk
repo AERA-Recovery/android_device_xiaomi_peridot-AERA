@@ -20,8 +20,8 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/emulated_storage.mk)
 # Configure twrp common.mk
 $(call inherit-product, vendor/twrp/config/common.mk)
 
-# Device-specific OrangeFox configuration
-$(call inherit-product, $(DEVICE_PATH)/fox_peridot.mk)
+# Device-specific AERA configuration
+$(call inherit-product, $(DEVICE_PATH)/aera_peridot.mk)
 
 # API
 PRODUCT_SHIPPING_API_LEVEL := 34

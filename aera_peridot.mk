@@ -24,89 +24,89 @@ AERA_MAINTAINER := Jonas Salo & Daniel Springer
 AERA_UI2_ADAPTIVE_RESOLUTION := true
 AERA_SCREEN_H := 2400
 AERA_STATUS_H := 115
-OF_HIDE_NOTCH := 1
-OF_CLOCK_POS := 1
+AERA_HIDE_NOTCH := 1
+AERA_CLOCK_POS := 1
 AERA_STATUS_INDENT_LEFT := 56
 AERA_STATUS_INDENT_RIGHT := 48
-OF_ALLOW_DISABLE_NAVBAR := 0
-OF_USE_GREEN_LED := 0
+AERA_ALLOW_DISABLE_NAVBAR := 0
+AERA_USE_GREEN_LED := 0
 
 # other stuff
-OF_QUICK_BACKUP_LIST := /boot;/data;
-OF_ENABLE_LPTOOLS := 1
-OF_NO_TREBLE_COMPATIBILITY_CHECK := 1
-OF_DYNAMIC_FULL_SIZE := 9126805504
+AERA_QUICK_BACKUP_LIST := /boot;/data;
+AERA_ENABLE_LPTOOLS := 1
+AERA_NO_TREBLE_COMPATIBILITY_CHECK := 1
+AERA_DYNAMIC_FULL_SIZE := 9126805504
 
 # number of list options before scrollbar creation
-OF_OPTIONS_LIST_NUM := 11
+AERA_OPTIONS_LIST_NUM := 11
 
 # A/B with recovery partition
-OF_AB_DEVICE_WITH_RECOVERY_PARTITION := 1
+AERA_AB_DEVICE_WITH_RECOVERY_PARTITION := 1
 
 # ----- data format stuff -----
 # ensure that /sdcard is bind-unmounted before f2fs data repair or format
-OF_UNBIND_SDCARD_F2FS := 1
+AERA_UNBIND_SDCARD_F2FS := 1
 
 # automatically wipe /metadata after data format
-OF_WIPE_METADATA_AFTER_DATAFORMAT := 1
+AERA_WIPE_METADATA_AFTER_DATAFORMAT := 1
 
 # avoid MTP issues after data format
-OF_BIND_MOUNT_SDCARD_ON_FORMAT := 1
+AERA_BIND_MOUNT_SDCARD_ON_FORMAT := 1
 
 # Set to 1 to attempt to unmount the SD cards before rebooting
-OF_UNMOUNT_SDCARDS_BEFORE_REBOOT := 1
+AERA_UNMOUNT_SDCARDS_BEFORE_REBOOT := 1
 
 # don't spam the console with loop errors
-OF_LOOP_DEVICE_ERRORS_TO_LOG := 1
+AERA_LOOP_DEVICE_ERRORS_TO_LOG := 1
 
 # lz4 compression
-OF_USE_LZ4_COMPRESSION := 1 
+AERA_USE_LZ4_COMPRESSION := 1
 
 # build all the partition tools
-OF_ENABLE_ALL_PARTITION_TOOLS := 1
+AERA_ENABLE_ALL_PARTITION_TOOLS := 1
 
 ifeq ($(FIXED_DECRYPT),false)
-	# Set to 1 to skip the FBE decryption routines (prevents hanging at the Fox logo or Redmi/Mi logo)
-	OF_SKIP_FBE_DECRYPTION := 1
+	# Set to 1 to skip the FBE decryption routines when device-specific crypto hangs.
+	AERA_SKIP_FBE_DECRYPTION := 1
 endif
 
 # Set this to 1 to replace the "Swipe up" lockscreen screen with a button
-OF_USE_LOCKSCREEN_BUTTON := 1
+AERA_USE_LOCKSCREEN_BUTTON := 1
 
 # Called just before formatting /data; only useful for devices/ROMs that have dynamic partitions
-OF_USE_DMCTL := 1
+AERA_USE_DMCTL := 1
 
 # Use this to change the default time zone
-OF_DEFAULT_TIMEZONE := GMT0;BST,M3.5.0,M10.5.0
+AERA_DEFAULT_TIMEZONE := GMT0;BST,M3.5.0,M10.5.0
 
 # Set this to 1 to avoid the new 'NO KERNEL CONFIG' error, when using a prebuilt kernel
-OF_FORCE_PREBUILT_KERNEL := 1
+AERA_FORCE_PREBUILT_KERNEL := 1
 
 # Set this to 1 if your device uses aidl (as opposed to hidl) to handle boot control, particularly changing slots
-OF_USE_AIDL_BOOT_CONTROL := 1
+AERA_USE_AIDL_BOOT_CONTROL := 1
 
-# Set this to 1 to remove toggleable option: "Reflash OrangeFox after flashing a ROM"
+# Set this to 1 to remove the toggleable "Reflash AERA after flashing a ROM" option.
 # Implemented forced method using /system/bin/pre_rom_flash.sh and .../post_rom_flash.sh
-# OF_NO_REFLASH_CURRENT_ORANGEFOX := 1
+# AERA_NO_REFLASH_CURRENT_RECOVERY := 1
 
 # Set this to 1 to disable automatic rebooting after openrecoveryscript finishes
-OF_DISABLE_ORS_AUTO_REBOOT := 1
+AERA_DISABLE_ORS_AUTO_REBOOT := 1
 
 # Set this to 1 to force the selection of f2fs when formatting data
-OF_FORCE_DATA_FORMAT_F2FS := 1
+AERA_FORCE_DATA_FORMAT_F2FS := 1
 
 # Set this to 1 to include an addon for removing factory reset protection (FRP)
-OF_ENABLE_FRP_ADDON := 1
+AERA_ENABLE_FRP_ADDON := 1
 
 # Set to 1 to force the casefolding props to true. Useful for devices that shipped with Android 11+/FBEv2, where casefolding is always used
-OF_FORCE_CASEFOLDING := 1
+AERA_FORCE_CASEFOLDING := 1
 
 # Set to 1 to enable the flashlight feature
-OF_FLASHLIGHT_ENABLE := 1
-OF_FL_PATH1 := /tmp/flashlight
+AERA_FLASHLIGHT_ENABLE := 1
+AERA_FL_PATH1 := /tmp/flashlight
 
 # Set to 1 to block operations after flashing a ROM i.e. formatting data, flashing other zips etc.
-OF_BLOCK_OPERATIONS_AFTER_ROM_FLASH := 1
+AERA_BLOCK_OPERATIONS_AFTER_ROM_FLASH := 1
 
 # Set to 1 to include WLAN features
-OF_ENABLE_WLAN := 1
+AERA_ENABLE_WLAN := 1

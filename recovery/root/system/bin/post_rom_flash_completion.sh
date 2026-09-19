@@ -8,11 +8,11 @@ LOGMSG() {
 
 LOGMSG "---$SCRIPT_NAME start---"
 
-if [ -s /tmp/fox_backup.img ]; then
+if [ -s /tmp/aera_backup.img ]; then
 	for slot in _a _b; do
 		if [ -e /dev/block/bootdevice/by-name/recovery${slot} ]; then
-			LOGMSG "Restoring OrangeFox to slot ${slot}..."
-			if dd if="/tmp/fox_backup.img" of="/dev/block/bootdevice/by-name/recovery${slot}" bs=1M; then
+			LOGMSG "Restoring AERA to slot ${slot}..."
+			if dd if="/tmp/aera_backup.img" of="/dev/block/bootdevice/by-name/recovery${slot}" bs=1M; then
 				sync
 			else
 				LOGMSG "Failed to flash to slot ${slot}..."
@@ -22,7 +22,7 @@ if [ -s /tmp/fox_backup.img ]; then
 		fi
 	done
 else
-	LOGMSG "Unable to find OrangeFox image for restoring..."
+	LOGMSG "Unable to find the AERA recovery backup"
 fi
 
 # LOGMSG "Clearing previous DFE installation logs..."

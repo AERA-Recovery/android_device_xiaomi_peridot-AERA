@@ -117,11 +117,11 @@ TARGET_RECOVERY_PIXEL_FORMAT := RGBX_8888
 
 # Crypto
 FIXED_DECRYPT := true
-TW_INCLUDE_CRYPTO := $(FIXED_DECRYPT)
-TW_INCLUDE_CRYPTO_FBE := $(FIXED_DECRYPT)
-TW_INCLUDE_FBE_METADATA_DECRYPT := $(FIXED_DECRYPT)
+AERA_INCLUDE_CRYPTO := $(FIXED_DECRYPT)
+AERA_INCLUDE_CRYPTO_FBE := $(FIXED_DECRYPT)
+AERA_INCLUDE_FBE_METADATA_DECRYPT := $(FIXED_DECRYPT)
 BOARD_USES_QCOM_FBE_DECRYPTION := $(FIXED_DECRYPT)
-TW_USE_FSCRYPT_POLICY := 2
+AERA_USE_FSCRYPT_POLICY := 2
 
 BOARD_USES_METADATA_PARTITION := true
 PLATFORM_VERSION := 99.87.36
@@ -134,53 +134,53 @@ BOOT_SECURITY_PATCH     := $(PLATFORM_SECURITY_PATCH)
 TARGET_BOARD_INFO_FILE := $(DEVICE_PATH)/board-info.txt
 
 # Tool
-TW_INCLUDE_REPACKTOOLS := true
-TW_INCLUDE_RESETPROP := true
-TW_INCLUDE_LIBRESETPROP := true
-TW_INCLUDE_LPDUMP := true
-TW_INCLUDE_LPTOOLS := true
+AERA_INCLUDE_REPACKTOOLS := true
+AERA_INCLUDE_RESETPROP := true
+AERA_INCLUDE_LIBRESETPROP := true
+AERA_INCLUDE_LPDUMP := true
+AERA_INCLUDE_LPTOOLS := true
 
 # Debug
 TARGET_USES_LOGD := true
-TWRP_INCLUDE_LOGCAT := true
+AERA_INCLUDE_LOGCAT := true
 
 # Fastbootd
-TW_INCLUDE_FASTBOOTD := true
+AERA_INCLUDE_FASTBOOTD := true
 
-# Other TWRP Configurations
-TW_THEME := portrait_hdpi
-TW_FRAMERATE := 120
+# Other AERA configurations
+AERA_THEME := portrait_hdpi
+AERA_FRAMERATE := 120
 RECOVERY_SDCARD_ON_DATA := true
 TARGET_RECOVERY_QCOM_RTC_FIX := true
-TW_EXCLUDE_DEFAULT_USB_INIT := true
-TW_INCLUDE_NTFS_3G := true
-TW_NO_EXFAT_FUSE := false
-TW_USE_TOOLBOX := true
+AERA_EXCLUDE_DEFAULT_USB_INIT := true
+AERA_INCLUDE_NTFS_3G := true
+AERA_NO_EXFAT_FUSE := false
+AERA_USE_TOOLBOX := true
 TARGET_USES_MKE2FS := true
-TW_INPUT_BLACKLIST := "hbtp_vm"
-TW_BRIGHTNESS_PATH := "/sys/class/backlight/panel0-backlight/brightness"
-TW_MAX_BRIGHTNESS := 2047
+AERA_INPUT_BLACKLIST := "hbtp_vm"
+AERA_BRIGHTNESS_PATH := "/sys/class/backlight/panel0-backlight/brightness"
+AERA_MAX_BRIGHTNESS := 2047
 AERA_EXTRA_LANGUAGES := true
 AERA_DEFAULT_LANGUAGE := en
-TW_DEFAULT_BRIGHTNESS := 200
-TW_NO_SCREEN_BLANK := true
-TW_EXCLUDE_APEX := true
-TW_HAS_EDL_MODE := true
+AERA_DEFAULT_BRIGHTNESS := 200
+AERA_NO_SCREEN_BLANK := true
+AERA_EXCLUDE_APEX := true
+AERA_HAS_EDL_MODE := true
 
 # Haptic
 FIXED_HAPTICS := true
 
 ifeq ($(FIXED_HAPTICS),true)
-   TW_SUPPORT_INPUT_AIDL_HAPTICS := true
-   TW_SUPPORT_INPUT_AIDL_HAPTICS_FQNAME := "IVibrator/vibratorfeature"
-#  TW_SUPPORT_INPUT_AIDL_HAPTICS_FIX_OFF := true
+   AERA_SUPPORT_INPUT_AIDL_HAPTICS := true
+   AERA_SUPPORT_INPUT_AIDL_HAPTICS_FQNAME := "IVibrator/vibratorfeature"
+#  AERA_SUPPORT_INPUT_AIDL_HAPTICS_FIX_OFF := true
 else
-   TW_NO_HAPTICS := true
+   AERA_NO_HAPTICS := true
 endif
 
-TW_USE_SERIALNO_PROPERTY_FOR_DEVICE_ID := true
-TW_LOAD_VENDOR_MODULES := "adsp_loader_dlkm.ko focaltech_3683g.ko focaltech_touch.ko goodix_core.ko goodix_ts.ko nxp-nci.ko qti_battery_charger.ko xiaomi_touch.ko icnss2.ko cnss_prealloc.ko cnss_utils.ko cnss_plat_ipc_qmi_svc.ko cnss_nl.ko wlan_firmware_service.ko cnss2.ko msm_kgsl.ko"
-TW_POST_DECRYPT_MODULES := "rfkill.ko cfg80211.ko gsim.ko rmnet_mem.ko ipam.ko qca_cld3_qca6750.ko"
-TW_LOAD_VENDOR_MODULES_EXCLUDE_GKI := true
-TW_CUSTOM_CPU_TEMP_PATH := "/sys/class/thermal/thermal_zone48/temp"
-TW_BATTERY_SYSFS_WAIT_SECONDS := 6
+AERA_USE_SERIALNO_PROPERTY_FOR_DEVICE_ID := true
+AERA_LOAD_VENDOR_MODULES := "adsp_loader_dlkm.ko focaltech_3683g.ko focaltech_touch.ko goodix_core.ko goodix_ts.ko nxp-nci.ko qti_battery_charger.ko xiaomi_touch.ko icnss2.ko cnss_prealloc.ko cnss_utils.ko cnss_plat_ipc_qmi_svc.ko cnss_nl.ko wlan_firmware_service.ko cnss2.ko msm_kgsl.ko"
+AERA_POST_DECRYPT_MODULES := "rfkill.ko cfg80211.ko gsim.ko rmnet_mem.ko ipam.ko qca_cld3_qca6750.ko"
+AERA_LOAD_VENDOR_MODULES_EXCLUDE_GKI := true
+AERA_CUSTOM_CPU_TEMP_PATH := "/sys/class/thermal/thermal_zone48/temp"
+AERA_BATTERY_SYSFS_WAIT_SECONDS := 6

@@ -37,9 +37,7 @@ fi
 if [ "$AERA_BUILD_DEVICE" = "$FDEVICE" ]; then
 	echo "Detected build device: $AERA_BUILD_DEVICE"
 
-# Review build flags with below links:
-# https://gitlab.com/OrangeFox/vendor/recovery/-/raw/fox_14.1/orangefox_build_vars.txt
-# https://gitlab.com/OrangeFox/bootable/Recovery/-/raw/fox_14.1/orangefox.mk
+# AERA device build settings
 
 	# A/B Partition
 	export AERA_VIRTUAL_AB_DEVICE=1
@@ -67,7 +65,7 @@ if [ "$AERA_BUILD_DEVICE" = "$FDEVICE" ]; then
 	export AERA_ENABLE_KERNELSU_NEXT_SUPPORT=1
 	export AERA_ENABLE_SUKISU_SUPPORT=1
 
-	# Fox Settings
+	# AERA settings
 	export AERA_SETTINGS_ROOT_DIRECTORY="/persist"
 	# AERA begins at R1.0; do not append legacy variant or patch suffixes.
 	unset AERA_VARIANT

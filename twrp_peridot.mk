@@ -23,9 +23,9 @@ PRODUCT_MANUFACTURER := Xiaomi
 TARGET_OTA_ASSERT_DEVICE := peridot
 
 # Theme
-TW_STATUS_ICONS_ALIGN := center
-#TW_Y_OFFSET := 99
-#TW_H_OFFSET := -99
+AERA_STATUS_ICONS_ALIGN := center
+#AERA_Y_OFFSET := 99
+#AERA_H_OFFSET := -99
 
 # Strongbox Device Decryption
-TW_INCLUDE_OMAPI := true
+AERA_INCLUDE_OMAPI := true

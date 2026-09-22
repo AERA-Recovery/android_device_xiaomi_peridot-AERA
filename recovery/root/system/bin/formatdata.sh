@@ -8,9 +8,9 @@ LOGMSG() {
 
 LOGMSG "---$SCRIPT_NAME start---"
 
-MARKER="/persist/Fox/.format_cleanup_marker"
+MARKER="/persist/AERA/.format_cleanup_marker"
 
-mkdir -p /persist/Fox
+mkdir -p /persist/AERA
 touch "$MARKER"
 
 LOGMSG "Post-format cleanup marker set"

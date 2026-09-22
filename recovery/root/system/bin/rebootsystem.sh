@@ -6,7 +6,7 @@ LOGMSG() {
     echo "I:$@" >> /tmp/recovery.log
 }
 
-MARKER="/persist/Fox/.format_cleanup_marker"
+MARKER="/persist/AERA/.format_cleanup_marker"
 
 [ -f "$MARKER" ] || exit 0
 

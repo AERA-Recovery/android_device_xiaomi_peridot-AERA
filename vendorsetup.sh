@@ -38,6 +38,8 @@ if [ "$AERA_BUILD_DEVICE" = "$FDEVICE" ]; then
 	echo "Detected build device: $AERA_BUILD_DEVICE"
 
 # AERA device build settings
+	export AERA_BUILD_STATUS=Official
+	export AERA_BUILD_TYPE=Beta
 
 	# A/B Partition
 	export AERA_VIRTUAL_AB_DEVICE=1

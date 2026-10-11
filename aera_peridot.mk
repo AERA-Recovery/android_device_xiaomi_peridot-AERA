@@ -96,7 +96,7 @@ AERA_DISABLE_ORS_AUTO_REBOOT := 1
 AERA_FORCE_DATA_FORMAT_F2FS := 1
 
 # Set this to 1 to include an addon for removing factory reset protection (FRP)
-AERA_ENABLE_FRP_ADDON := 1
+AERA_ENABLE_FRP_WIPE := 1
 
 # Set to 1 to force the casefolding props to true. Useful for devices that shipped with Android 11+/FBEv2, where casefolding is always used
 AERA_FORCE_CASEFOLDING := 1

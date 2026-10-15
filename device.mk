@@ -24,6 +24,7 @@ $(call inherit-product, vendor/twrp/config/common.mk)
 $(call inherit-product, $(DEVICE_PATH)/aera_peridot.mk)
 
 PRODUCT_PACKAGES += \
+    aera-audio-bridge \
     aera-audio-primary-opener
 
 # API

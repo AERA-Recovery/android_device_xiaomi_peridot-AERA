@@ -75,18 +75,81 @@ service peridot-flashlight /system/bin/peridot_flashlight.sh
     group root
     seclabel u:r:recovery:s0
 
+service aera-audio-bootstrap /system/bin/aera_audio_bootstrap.sh
+    class core
+    disabled
+    oneshot
+    user root
+    group root
+    seclabel u:r:recovery:s0
+    stdio_to_kmsg
+
+service aera-pd-mapper /vendor/bin/aera-pd-mapper
+    class core
+    disabled
+    user system
+    group system
+    seclabel u:r:recovery:s0
+    setenv LD_LIBRARY_PATH /vendor/aera-audio-abi:/vendor/aera-stock-lib64:/vendor/lib64:/system/lib64
+    stdio_to_kmsg
+
+service aera-dspservice /vendor/bin/aera-dspservice
+    class hal
+    disabled
+    user system
+    group system wakelock 2908
+    capabilities BLOCK_SUSPEND
+    seclabel u:r:recovery:s0
+    setenv LD_LIBRARY_PATH /vendor/aera-audio-abi:/vendor/aera-stock-lib64:/vendor/lib64:/system/lib64
+    interface vendor.qti.hardware.dsp@1.0::IDspService dspservice
+    stdio_to_kmsg
+
+service aera-audioadsprpcd /vendor/bin/aera-audioadsprpcd audiopd
+    class main
+    disabled
+    user media
+    group media
+    seclabel u:r:recovery:s0
+    setenv LD_LIBRARY_PATH /vendor/aera-audio-abi:/vendor/aera-stock-lib64:/vendor/lib64:/system/lib64
+    stdio_to_kmsg
+
+# Slot-matched stock Qualcomm audio HAL. Started only after the real machine card
+# exists so that AGMIPC/PAL can register without touching pre-decrypt vendor state.
+service aera-stock-audio-hal /vendor/bin/hw/android.hardware.audio.service
+    class hal
+    disabled
+    oneshot
+    user root
+    group root audio system media
+    capabilities BLOCK_SUSPEND SYS_NICE
+    seclabel u:r:recovery:s0
+    setenv LD_LIBRARY_PATH /vendor/aera-audio-abi:/vendor/aera-stock-lib64:/mnt/aera-stock/odm/lib64:/vendor/lib64:/system/lib64
+    setenv ANDROID_ROOT /system
+    setenv ANDROID_DATA /data
+    interface android.hardware.audio@7.1::IDevicesFactory default
+    interface android.hardware.audio.effect@7.0::IEffectsFactory default
+    interface vendor.qti.hardware.AGMIPC@1.0::IAGM default
+    interface vendor.qti.hardware.pal@1.0::IPAL default
+    stdio_to_kmsg
+
+service aera-audio-primary-opener /system/bin/aera-audio-primary-opener
+    class hal
+    disabled
+    oneshot
+    user root
+    group root
+    seclabel u:r:recovery:s0
+    stdio_to_kmsg
+
 on property:twrp.modules.loaded=true
-    # Mount firmware
-    mkdir /firmware
-    mount vfat /dev/block/bootdevice/by-name/modem${ro.boot.slot_suffix} /firmware ro
-    # Load ADSP firmware for PMIC
-    wait /sys/kernel/boot_adsp/boot
-    write /sys/kernel/boot_adsp/boot 1
-    wait /sys/class/power_supply/battery
+    wait /sys/class/power_supply/battery 2
     start vendor.qseecomd
     start vendor.health-recovery
     start vibratorfeature-hal-service
-    umount /firmware
+
+on property:post.decrypt.modules=true
+    write /dev/kmsg "[aera-audio] post-decrypt bootstrap requested"
+    start aera-audio-bootstrap
 
 on property:vendor.sys.listeners.registered=true
     start vendor.ssgtzd

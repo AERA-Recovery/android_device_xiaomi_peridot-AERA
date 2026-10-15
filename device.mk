@@ -23,6 +23,9 @@ $(call inherit-product, vendor/twrp/config/common.mk)
 # Device-specific AERA configuration
 $(call inherit-product, $(DEVICE_PATH)/aera_peridot.mk)
 
+PRODUCT_PACKAGES += \
+    aera-audio-primary-opener
+
 # API
 PRODUCT_SHIPPING_API_LEVEL := 34
 PRODUCT_TARGET_VNDK_VERSION := 34

@@ -1,0 +1,20 @@
+// Copyright (C) 2026 AERA Recovery Project contributors
+// SPDX-License-Identifier: Apache-2.0
+
+cc_binary {
+    name: "aera-audio-primary-opener",
+    recovery: true,
+    srcs: ["aera_audio_primary_opener.cpp"],
+    shared_libs: [
+        "android.hardware.audio@7.0",
+        "android.hardware.audio@7.1",
+        "libhidlbase",
+        "libutils",
+    ],
+    cpp_std: "c++17",
+    cflags: [
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+    ],
+}

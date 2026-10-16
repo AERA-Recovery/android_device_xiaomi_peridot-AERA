@@ -154,7 +154,7 @@ for REQUIRED in \
 done
 
 for REQUIRED in \
-    /vendor/bin/aera-pd-mapper \
+    /system/bin/aera-pd-mapper \
     /vendor/bin/aera-dspservice \
     /vendor/bin/aera-audioadsprpcd; do
     [ -x "${REQUIRED}" ] || fail "Missing ramdisk prebuilt ${REQUIRED}"

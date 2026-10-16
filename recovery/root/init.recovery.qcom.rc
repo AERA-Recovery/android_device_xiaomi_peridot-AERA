@@ -84,13 +84,22 @@ service aera-audio-bootstrap /system/bin/aera_audio_bootstrap.sh
     seclabel u:r:recovery:s0
     stdio_to_kmsg
 
-service aera-pd-mapper /vendor/bin/aera-pd-mapper
+service aera-pdmapper-boot /system/bin/sh /system/bin/aera_pdmapper_bootstrap.sh
+    class core
+    disabled
+    oneshot
+    user root
+    group root
+    seclabel u:r:recovery:s0
+    stdio_to_kmsg
+
+service aera-pd-mapper /system/bin/aera-pd-mapper
     class core
     disabled
     user system
     group system
     seclabel u:r:recovery:s0
-    setenv LD_LIBRARY_PATH /vendor/aera-audio-abi:/vendor/aera-stock-lib64:/vendor/lib64:/system/lib64
+    setenv LD_LIBRARY_PATH /system/lib64/aera-pdmapper:/system/lib64
     stdio_to_kmsg
 
 service aera-dspservice /vendor/bin/aera-dspservice
@@ -146,6 +155,14 @@ on property:twrp.modules.loaded=true
     start vendor.qseecomd
     start vendor.health-recovery
     start vibratorfeature-hal-service
+    start aera-pdmapper-boot
+
+# Keep the audio lock until battery / soundcard setup is finished
+on property:vendor.aera.pdmapper.ready=1 && property:init.svc.aera-pd-mapper=running && property:init.svc.aera-pdmapper-boot=running
+    setprop vendor.aera.pdmapper.ready 0
+    # Load ADSP firmware for PMIC with pd-mapper already running
+    write /dev/kmsg "[aera-pdmapper-boot] init requesting ADSP boot"
+    write /sys/kernel/boot_adsp/boot 1
 
 on property:post.decrypt.modules=true
     write /dev/kmsg "[aera-audio] post-decrypt bootstrap requested"

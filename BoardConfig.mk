@@ -180,7 +180,11 @@ endif
 
 AERA_USE_SERIALNO_PROPERTY_FOR_DEVICE_ID := true
 AERA_LOAD_VENDOR_MODULES := "focaltech_3683g.ko focaltech_touch.ko goodix_core.ko goodix_ts.ko nxp-nci.ko qti_battery_charger.ko xiaomi_touch.ko icnss2.ko cnss_prealloc.ko cnss_utils.ko cnss_plat_ipc_qmi_svc.ko cnss_nl.ko wlan_firmware_service.ko cnss2.ko msm_kgsl.ko spf_core_dlkm.ko gpr_dlkm.ko snd_event_dlkm.ko q6_notifier_dlkm.ko q6_pdr_dlkm.ko adsp_loader_dlkm.ko audpkt_ion_dlkm.ko audio_pkt_dlkm.ko audio_prm_dlkm.ko pinctrl_lpi_dlkm.ko swr_dlkm.ko swr_ctrl_dlkm.ko wcd_core_dlkm.ko mbhc_dlkm.ko sdca_registers_dlkm.ko wcd9xxx_dlkm.ko stub_dlkm.ko aw882xx_dlkm.ko fs19xx_dlkm.ko machine_dlkm.ko swr_haptics_dlkm.ko hdmi_dlkm.ko lpass_cdc_va_macro_dlkm.ko lpass_cdc_rx_macro_dlkm.ko lpass_cdc_tx_macro_dlkm.ko lpass_cdc_dlkm.ko wsa884x_dlkm.ko wsa883x_dlkm.ko wcd937x_dlkm.ko wcd937x_slave_dlkm.ko wcd9378_dlkm.ko swr_dmic_dlkm.ko wcd939x_dlkm.ko frpc-adsprpc.ko"
-AERA_POST_DECRYPT_MODULES := "rfkill.ko cfg80211.ko gsim.ko rmnet_mem.ko ipam.ko qca_cld3_qca6750.ko"
+# Our WLAN modules do not need to be loaded after decryption; load as normal
+AERA_LOAD_VENDOR_MODULES := "$(subst ",,$(AERA_LOAD_VENDOR_MODULES)) rfkill.ko cfg80211.ko gsim.ko rmnet_mem.ko ipam.ko qca_cld3_qca6750.ko"
+# Still use post-decrypt event for the audio bootstrap
+# Placeholder module so the loader still publishes post.decrypt.modules=true
+AERA_POST_DECRYPT_MODULES := "aera_post_decrypt_stage_only.ko"
 AERA_LOAD_VENDOR_MODULES_EXCLUDE_GKI := true
 AERA_CUSTOM_CPU_TEMP_PATH := "/sys/class/thermal/thermal_zone48/temp"
 AERA_BATTERY_SYSFS_WAIT_SECONDS := 6

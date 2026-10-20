@@ -25,7 +25,8 @@ $(call inherit-product, $(DEVICE_PATH)/aera_peridot.mk)
 
 PRODUCT_PACKAGES += \
     aera-audio-bridge \
-    aera-audio-primary-opener
+    aera-audio-primary-opener \
+    aera-peridot-wlan-mac
 
 # API
 PRODUCT_SHIPPING_API_LEVEL := 34

@@ -1,0 +1,12 @@
+# Qualcomm cellular data is started by the AERA UI, not during recovery boot.
+service aera-peridot-cellular /system/bin/aera-cellular-provider
+    class main
+    disabled
+    oneshot
+    user root
+    group root
+    seclabel u:r:recovery:s0
+    stdio_to_kmsg
+
+on property:twrp.modules.loaded=true
+    start aera-peridot-cellular

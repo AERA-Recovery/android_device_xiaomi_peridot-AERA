@@ -3,6 +3,20 @@ package {
 }
 
 cc_binary {
+    name: "aera-cellular-provider",
+    recovery: true,
+    srcs: ["daemon.cpp", "runtime.cpp", "session.cpp"],
+    include_dirs: ["bootable/recovery"],
+    cpp_std: "c++17",
+    rtti: false,
+    cppflags: ["-fexceptions"],
+    cflags: ["-Wall", "-Wextra", "-Werror"],
+    static_libs: ["libjsoncpp"],
+    shared_libs: ["libcutils", "libcrypto"],
+    required: ["aera-mobile-rmtfs", "aera-mobile-tftp"],
+}
+
+cc_binary {
     name: "aera-mobile-rmtfs",
     recovery: true,
     stl: "none",

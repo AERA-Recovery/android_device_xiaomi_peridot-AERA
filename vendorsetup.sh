@@ -66,6 +66,7 @@ if [ "$AERA_BUILD_DEVICE" = "$FDEVICE" ]; then
 	export AERA_ENABLE_ROOT_MANAGER=1
 
 	# AERA settings
+	export AERA_ENABLE_MOBILE_DATA=1
 	export AERA_SETTINGS_ROOT_DIRECTORY="/persist"
 	# AERA begins at R1.0; do not append legacy variant or patch suffixes.
 	unset AERA_VARIANT

@@ -28,6 +28,10 @@ PRODUCT_PACKAGES += \
     aera-audio-primary-opener \
     aera-peridot-wlan-mac
 
+ifeq ($(AERA_ENABLE_MOBILE_DATA),1)
+    PRODUCT_PACKAGES += aera-cellular-provider
+endif
+
 # API
 PRODUCT_SHIPPING_API_LEVEL := 34
 PRODUCT_TARGET_VNDK_VERSION := 34

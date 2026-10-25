@@ -146,6 +146,46 @@ mount_read_only system "${STOCK_SYSTEM}" || fail "Unable to mount live ROM syste
 mount_read_only odm "${STOCK_ODM}" || fail "Unable to mount live ROM odm"
 LOGMSG "Live ROM vendor/system/odm mounted privately"
 
+# AOSP vs Xiaomi HAL - HyperOS ships same service but with suffix
+HYPEROS_AUDIO=0
+if [ -f "${STOCK_VENDOR}/bin/hw/android.hardware.audio.service" ]; then
+    STOCK_AUDIO_SERVICE="${STOCK_VENDOR}/bin/hw/android.hardware.audio.service"
+elif [ -f "${STOCK_VENDOR}/bin/hw/android.hardware.audio.service_64" ]; then
+    STOCK_AUDIO_SERVICE="${STOCK_VENDOR}/bin/hw/android.hardware.audio.service_64"
+    HYPEROS_AUDIO=1
+else
+    fail "No supported stock Qualcomm audio service executable"
+fi
+
+module_loaded() {
+    grep -q "^$1 " /proc/modules
+}
+
+load_stock_module() {
+    module="$1"
+    module_loaded "${module}" && return 0
+    for directory in \
+        /tmp/vendor/lib/modules \
+        /tmp/vendor_dlkm/lib/modules \
+        "${STOCK_VENDOR}/lib/modules"; do
+        candidate="${directory}/${module}.ko"
+        [ -f "${candidate}" ] || continue
+        insmod "${candidate}" || module_loaded "${module}" || \
+            fail "Could not load ${candidate}"
+        module_loaded "${module}" || fail "${module} not registered after insmod"
+        return 0
+    done
+    fail "Active ROM has no staged ${module}.ko"
+}
+
+/system/bin/aera_load_rfkill.sh || fail "RFKill prerequisite unavailable"
+
+if [ "${HYPEROS_AUDIO}" -eq 1 ] && [ ! -e /dev/snd/controlC0 ]; then
+    load_stock_module btpower
+    load_stock_module bt_fm_slim
+    LOGMSG "HyperOS soundcard dependencies loaded"
+fi
+
 for REQUIRED in \
     lib64/libadsprpc.so \
     lib64/libadsp_default_listener.so \
@@ -178,12 +218,52 @@ bind_file_read_only "${SYSTEM_LIB64}/libbinder.so" \
     "${AUDIO_ABI}/libbinder.so"
 bind_file_read_only "${SYSTEM_LIB64}/libbinder_ndk.so" \
     "${AUDIO_ABI}/libbinder_ndk.so"
+
+if [ "${HYPEROS_AUDIO}" -eq 1 ]; then
+    # Recovery does not provide Android 14's live-system vendor linker namespace
+    # Bind only the missing stock libraries into the existing audio-only ABI search directory,
+    # never across the whole /system tree
+    expose_hyperos_abi() {
+        name="$1"
+        target="${AUDIO_ABI}/${name}"
+        source="${SYSTEM_LIB64}/${name}"
+        [ -f "${source}" ] || fail "Missing HyperOS audio ABI: ${name}"
+        if ! [ -e "${target}" ]; then
+            : > "${target}" || fail "Could not create RAMdisk ABI target ${name}"
+        fi
+        bind_file_read_only "${source}" "${target}"
+    }
+
+    for library in \
+        libminijail.so \
+        libfmq.so \
+        libmedia_helper.so \
+        libaudioutils.so \
+        libhidlmemory.so \
+        android.hidl.memory@1.0.so \
+        libspeexresampler.so \
+        android.hidl.memory.token@1.0.so \
+        libstagefright_foundation.so \
+        libtinyalsa.so; do
+        expose_hyperos_abi "${library}"
+    done
+
+    [ -s "${AUDIO_ABI}/libaudioroute.so" ] || \
+        fail "Missing Android 14 libaudioroute.so recovery compatibility prebuilt"
+    [ -f "${STOCK_ODM}/lib64/libaudioroute_ext.so" ] || \
+        fail "Missing active ROM libaudioroute_ext.so"
+    [ -e "${AUDIO_ABI}/libaudioroute_ext.so" ] || \
+        : > "${AUDIO_ABI}/libaudioroute_ext.so"
+    bind_file_read_only "${STOCK_ODM}/lib64/libaudioroute_ext.so" \
+        "${AUDIO_ABI}/libaudioroute_ext.so"
+    LOGMSG "HyperOS Android 14 audio ABI exposed"
+fi
 LOGMSG "Stock system audio ABI exposed"
 
 # Expose only the stock audio HAL pieces that Android's HIDL/libhardware loaders
 # expect at fixed /vendor paths. Do not overlay /vendor or /vendor/lib64/hw as a
 # whole, because recovery has its own vendor services and graphics stack.
-bind_file_read_only "${STOCK_VENDOR}/bin/hw/android.hardware.audio.service" \
+bind_file_read_only "${STOCK_AUDIO_SERVICE}" \
     /vendor/bin/hw/android.hardware.audio.service
 
 for lib in \

@@ -110,3 +110,6 @@ AERA_BLOCK_OPERATIONS_AFTER_ROM_FLASH := 1
 
 # Set to 1 to include WLAN features
 AERA_ENABLE_WLAN := 1
+
+# Only ship root-provider modules for the device's Android kernel version
+AERA_ROOT_MODULE_KERNELS := 6.1
